@@ -3,12 +3,15 @@ import { UserT } from '../types/index.js';
 
 type UserDocT = UserT & Document;
 
-const UserSchema = new Schema<UserDocT>({
-    avatarUrl: { type: String, required: true, trim: true },
-    name: { type: String, required: true, trim: true },
-    email: { type: String, required: true, trim: true, lowercase: true },
-    password: { type: String, required: true, trim: true },
-    role: { type: String, required: true, trim: true },
-});
+const UserSchema = new Schema<UserDocT>(
+    {
+        avatarUrl: { type: String, required: false, trim: true },
+        name: { type: String, required: true, trim: true },
+        email: { type: String, required: true, trim: true, lowercase: true, unique: true },
+        password: { type: String, required: true, trim: true },
+        role: { type: String, required: true, trim: true, default: 'user' },
+    },
+    { timestamps: true, versionKey: false }
+);
 
-export const UserModel = mongoose.model('Users', UserSchema);
+export const UserModel = mongoose.model('users', UserSchema);
