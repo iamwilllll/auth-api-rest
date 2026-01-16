@@ -1,11 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiResponse } from '../helpers/index.js';
 import { AppError } from '../errors/appError.error.js';
+import { MongoServerError } from 'mongodb';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function errorMiddleware(err: Error, req: Request, res: Response, next: NextFunction) {
     if (err instanceof AppError && err.isOperational) {
         return ApiResponse.error(res, err.statusCode, err.message, err.code);
+    }
+
+    if (err instanceof MongoServerError && err.code === 11000) {
+        return ApiResponse.error(
+            res,
+            409,
+            'This username is already in use. Please choose another one.',
+            'EMAIL_DUPLICATION_ERROR'
+        );
     }
 
     console.error('UNEXPECTED ERROR:', {
