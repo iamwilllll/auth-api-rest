@@ -29,7 +29,7 @@ export async function loginController(req: Request, res: Response, next: NextFun
         });
 
         const currentSession = await newSession.save();
-        console.log(currentSession._id)
+        console.log(currentSession._id);
         const JWT = createJWT(currentSession._id.toString(), duration);
 
         res.cookie('sessionId', JWT, {
