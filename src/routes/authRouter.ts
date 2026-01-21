@@ -6,6 +6,7 @@ import {
     loginController,
     refreshEmailVerificationCodeController,
     emailConfirmController,
+    getCurrentUserController,
 } from '../controllers/index.js';
 
 import {
@@ -14,6 +15,7 @@ import {
     refreshEmailVerificationCodeMiddlewares,
     emailConfirmMiddlewares,
     authenticate,
+    loadUser,
 } from '../middlewares/index.js';
 import { logoutController } from '../controllers/auth/logout.controller.js';
 
@@ -29,4 +31,5 @@ authRouter.post(
 authRouter.post('/email/confirm', emailConfirmMiddlewares, emailConfirmController, errorMiddleware);
 authRouter.post('/login', loginMiddlewares, loginController, errorMiddleware);
 authRouter.post('/logout', authenticate, logoutController, errorMiddleware);
+authRouter.get('/me', authenticate, loadUser, getCurrentUserController, errorMiddleware);
 export default authRouter;
