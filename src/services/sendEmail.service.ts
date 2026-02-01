@@ -16,6 +16,12 @@ function createResendClient() {
 }
 
 export async function sendEmailService({ to, subject, html }: SendEmailServiceProps) {
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(colors.yellow('📧 Email simulated'));
+        console.log({ to, subject });
+        return;
+    }
+
     const resend = createResendClient();
 
     await resend.emails.send({
@@ -25,13 +31,5 @@ export async function sendEmailService({ to, subject, html }: SendEmailServicePr
         html,
     });
 
-    console.log(colors.cyan.bold(`Email sent to: ${to}`));
-
-    if (process.env.NODE_ENV !== 'production') {
-        console.log('📧 Email simulated');
-        console.log({ to, subject });
-        return;
-    }
-
-    console.log(colors.cyan.bold(`Email sent to:, ${to}`));
+    console.log(colors.cyan.bold(`📨 Email sent to: ${to}`));
 }
