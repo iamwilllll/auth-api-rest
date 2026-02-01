@@ -4,6 +4,8 @@ import { ApiResponse } from '../../helpers/index.js';
 import { createOtpCode, getUserWithOutPass, hashPassword } from '../../utils/index.js';
 import { type UserWithOutPassT } from '../../types/index.js';
 import { env } from '../../config/env.js';
+import { sendEmailService } from '../../services/sendEmail.service.js';
+import fs from 'node:fs';
 
 export async function registerController(req: Request, res: Response, next: NextFunction) {
     try {
@@ -18,14 +20,12 @@ export async function registerController(req: Request, res: Response, next: Next
             otpCodeExpiration: new Date(Date.now() + env.TIMES.TEN_MINUTES),
         });
 
+        const resetPasswordEmailTemplate = fs.readFileSync('./../../email_templates/VerifyAccount.html', 'utf-8');
+        const html = resetPasswordEmailTemplate.replace('*resetCode*', otpCode);
+
+        await sendEmailService({ to: email, subject: 'Email verification code', text: otpCode, html });
         const savedUser = await newUser.save();
         const userWithOutPass = getUserWithOutPass(savedUser.toObject());
-
-        // ? send otp code from email
-        /* 
-            import { sendEmailService } from '../../services/sendEmail.service.js';
-            sendEmailService()
-        */
 
         ApiResponse.success<UserWithOutPassT>(res, 201, 'User was created successful', userWithOutPass);
     } catch (err) {
