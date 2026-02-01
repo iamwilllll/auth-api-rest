@@ -8,6 +8,7 @@ import {
     emailConfirmController,
     getCurrentUserController,
     forgotPasswordController,
+    resetPasswordController,
 } from '../controllers/index.js';
 
 import {
@@ -35,4 +36,8 @@ authRouter.post('/login', loginMiddlewares, loginController, errorMiddleware);
 authRouter.post('/logout', authenticate, logoutController, errorMiddleware);
 authRouter.get('/me', authenticate, loadUser, getCurrentUserController, errorMiddleware);
 authRouter.post('/password/forgot', forgotPasswordMiddlewares, forgotPasswordController, errorMiddleware);
+authRouter.post('/password/reset', emailConfirmMiddlewares, resetPasswordController, errorMiddleware);
+
+
+
 export default authRouter;

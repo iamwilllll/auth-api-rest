@@ -2,10 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import { ApiResponse } from '../../helpers/response.js';
 import { UserModel } from '../../models/user.model.js';
 import { AppError } from '../../errors/appError.error.js';
-import { comparePassword, createJWT, getUserWithOutPass } from '../../utils/index.js';
+import { comparePassword, getUserWithOutPass } from '../../utils/index.js';
 import { SessionModel } from '../../models/session.model.js';
 import { env } from '../../config/env.js';
-
+import jwt from 'jsonwebtoken';
 export async function loginController(req: Request, res: Response, next: NextFunction) {
     try {
         const { email, password, rememberMe } = req.body;
@@ -31,7 +31,7 @@ export async function loginController(req: Request, res: Response, next: NextFun
         });
 
         const currentSession = await newSession.save();
-        const JWT = createJWT(currentSession._id.toString(), duration);
+        const JWT = jwt.sign(currentSession._id.toString(), env.JWT.KEY, { expiresIn: duration });
 
         res.cookie('sessionId', JWT, {
             httpOnly: true,

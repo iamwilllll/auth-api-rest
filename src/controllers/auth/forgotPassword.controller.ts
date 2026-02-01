@@ -6,6 +6,7 @@ import { type UserWithOutPassT } from '../../types/index.js';
 import { sendEmailService } from '../../services/sendEmail.service.js';
 import fs from 'node:fs';
 import { AppError } from '../../errors/appError.error.js';
+import path from 'node:path';
 
 export async function forgotPasswordController(req: Request, res: Response, next: NextFunction) {
     try {
@@ -18,12 +19,13 @@ export async function forgotPasswordController(req: Request, res: Response, next
         user.resetPasswordOTPCode = otpCode;
         user.resetPasswordOTPCodeExpirationTime = new Date(Date.now() + 10 * 60 * 1000);
 
-        const resetPasswordEmailTemplate = fs.readFileSync('./../../email_templates/ResetYourPassword.html', 'utf-8');
+        const templatePath = path.join(process.cwd(), 'src', 'email_templates', 'ResetYourPassword.html');
+        const resetPasswordEmailTemplate = fs.readFileSync(templatePath, 'utf-8');
         const html = resetPasswordEmailTemplate.replace('*resetCode*', otpCode);
-        await sendEmailService({ to: email, subject: 'Email verification code', text: otpCode, html });
+        await sendEmailService({ to: email, subject: 'Rest password code', text: otpCode, html });
 
         const savedUser = await user.save();
-        const UserWithOutPass = getUserWithOutPass(savedUser);
+        const UserWithOutPass = getUserWithOutPass(savedUser.toObject());
         ApiResponse.success<UserWithOutPassT>(res, 201, 'User was created successful', UserWithOutPass);
     } catch (err) {
         next(err);
