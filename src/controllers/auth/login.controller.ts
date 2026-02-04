@@ -37,8 +37,7 @@ export async function loginController(req: Request, res: Response, next: NextFun
 
         res.cookie('sessionId', JWT, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true,
             maxAge: duration,
         });
 

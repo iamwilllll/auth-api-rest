@@ -16,7 +16,7 @@ function createResendClient() {
 }
 
 export async function sendEmailService({ to, subject, html }: SendEmailServiceProps) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
         console.log(colors.yellow('📧 Email simulated'));
         console.log({ to, subject });
         return;
