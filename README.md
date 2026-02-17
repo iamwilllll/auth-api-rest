@@ -28,3 +28,22 @@ password: string
 rememberMe: boolean
 }
 
+**url**/api/auth/logout
+{}
+
+**url**/api/auth/me
+{}
+
+**url**/api/password/forgot
+{
+email: string
+}
+
+**url**/api/password/reset
+
+{
+"otpCode": string,
+"email": string,
+"newPassword": string
+"repeatNewPassword": string
+}

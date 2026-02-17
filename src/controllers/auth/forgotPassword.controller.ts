@@ -22,7 +22,7 @@ export async function forgotPasswordController(req: Request, res: Response, next
         const html = resetPasswordEmailTemplate.replace('*resetCode*', otpCode);
 
         await Promise.all([existingUser.save(), sendEmailService({ to: email, subject: 'Rest password code', html })]);
-        
+
         //! DEV ONLY:
         //! The OTP is exposed in the response to simulate email delivery
         //! during development. In production, OTPs must be sent via a secure
