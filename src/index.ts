@@ -11,7 +11,10 @@ import { env } from './config/env.js';
 })();
 
 async function main() {
+    // * server initialization
     const server = Server.init();
+
+    // * proxy
     server.set('trust proxy', 1);
 
     //* cors configuration
@@ -24,6 +27,7 @@ async function main() {
 
             return callback(new Error('Not allowed by CORS'));
         },
+
         credentials: true,
         optionsSuccessStatus: 200,
     };

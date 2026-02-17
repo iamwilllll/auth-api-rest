@@ -10,13 +10,16 @@ import path from 'node:path';
 
 export async function registerController(req: Request, res: Response, next: NextFunction) {
     try {
-        const { name, email, password } = req.body;
-        const hashedPassword = await hashPassword(password);
+        const { name, email, password, repeatPassword } = req.body;
+        if (password !== repeatPassword) return ApiResponse.error(res, 400, 'CREDENTIAL_ERROR', 'Passwords not match');
+        const existingUser = await UserModel.findOne({ email });
+        if (existingUser) return ApiResponse.error(res, 400, 'CREDENTIAL_ERROR', 'User with this email already exists.');
+
         const otpCode = createOtpCode();
         const newUser = new UserModel({
             name,
             email,
-            password: hashedPassword,
+            password: await hashPassword(password),
             otpCode,
             otpCodeExpiration: new Date(Date.now() + env.TIMES.TEN_MINUTES),
         });
@@ -25,13 +28,16 @@ export async function registerController(req: Request, res: Response, next: Next
         const resetPasswordEmailTemplate = fs.readFileSync(templatePath, 'utf-8');
         const html = resetPasswordEmailTemplate.replace('*verificationCode*', otpCode);
 
-        const savedUser = await newUser.save();
-        const userWithOutPass = getUserWithOutPass(savedUser.toObject());
-
         await sendEmailService({ to: email, subject: 'Email verification code', html });
 
+        const savedUser = await newUser.save();
+
+        //! DEV ONLY:
+        //! The OTP is exposed in the response to simulate email delivery
+        //! during development. In production, OTPs must be sent via a secure
+        //! email provider and never returned in API responses.
         ApiResponse.success<{ user: UserWithOutPassT; otpCode: string }>(res, 201, 'User was created successful', {
-            user: userWithOutPass,
+            user: getUserWithOutPass(savedUser.toObject()),
             otpCode,
         });
     } catch (err) {

@@ -8,7 +8,7 @@ const UserSchema = new Schema<UserDocT>(
         avatarUrl: { type: String, required: false, trim: true },
         name: { type: String, required: true, trim: true },
         email: { type: String, required: true, trim: true, lowercase: true, unique: true },
-        password: { type: String, required: true, trim: true },
+        password: { type: String, required: true, trim: true, select: false },
         role: { type: String, required: true, trim: true, default: 'user' },
         otpCode: { type: String, required: false, trim: true },
         otpCodeExpiration: { type: Date, required: false },
