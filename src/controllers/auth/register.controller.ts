@@ -27,7 +27,7 @@ export async function registerController(req: Request, res: Response, next: Next
         const resetPasswordEmailTemplate = fs.readFileSync(templatePath, 'utf-8');
         const html = resetPasswordEmailTemplate.replace('*verificationCode*', otpCode);
 
-        await Promise.all([newUser.save(), sendEmailService({ to: email, subject: 'Email verification code', html })]);
+        await Promise.all([newUser.save(), sendEmailService({ to: email, subject: 'Email verification code', text: otpCode, html })]);
 
         //! DEV ONLY:
         //! The OTP is exposed in the response to simulate email delivery

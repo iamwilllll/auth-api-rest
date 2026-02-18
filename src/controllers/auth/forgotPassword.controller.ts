@@ -21,7 +21,7 @@ export async function forgotPasswordController(req: Request, res: Response, next
         const resetPasswordEmailTemplate = fs.readFileSync(templatePath, 'utf-8');
         const html = resetPasswordEmailTemplate.replace('*resetCode*', otpCode);
 
-        await Promise.all([existingUser.save(), sendEmailService({ to: email, subject: 'Rest password code', html })]);
+        await Promise.all([existingUser.save(), sendEmailService({ to: email, subject: 'Rest password code', text: otpCode, html })]);
 
         //! DEV ONLY:
         //! The OTP is exposed in the response to simulate email delivery

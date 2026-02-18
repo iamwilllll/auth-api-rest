@@ -1,35 +1,29 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 import { env } from '../config/env.js';
-import colors from 'colors';
 
 type SendEmailServiceProps = {
     to: string;
     subject: string;
+    text?: string;
     html: string;
 };
 
-function createResendClient() {
-    if (!env.RESEND.API_KEY) {
-        throw new Error('RESEND_API_KEY is not defined');
-    }
-    return new Resend(env.RESEND.API_KEY);
-}
+const { HOST, PORT, SECURE, USER, PASSWORD } = env.SMTP;
+const transporter = nodemailer.createTransport({
+    host: HOST,
+    port: PORT,
+    secure: SECURE,
+    auth: {
+        user: USER,
+        pass: PASSWORD,
+    },
+});
 
-export async function sendEmailService({ to, subject, html }: SendEmailServiceProps) {
-    if (process.env.NODE_ENV === 'development') {
-        console.log(colors.yellow('📧 Email simulated'));
-        console.log({ to, subject });
+export async function sendEmailService({ to, subject, text, html }: SendEmailServiceProps) {
+    if (env.isDev) {
+        console.log({ to, subject, text });
         return;
     }
 
-    const resend = createResendClient();
-
-    await resend.emails.send({
-        from: env.RESEND.USER!,
-        to,
-        subject,
-        html,
-    });
-
-    console.log(colors.cyan.bold(`📨 Email sent to: ${to}`));
+    await transporter.sendMail({ from: `"Auth API" <${USER}>`, to, subject, text, html });
 }
