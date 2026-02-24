@@ -46,6 +46,6 @@ async function main() {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
 
-    server.use(express.static(path.join(__dirname, 'public')));
-    server.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+    server.use(express.static(path.join(__dirname, 'static')));
+    server.get('/', (req, res) => res.sendFile(path.join(__dirname, 'static', 'index.html')));
 }
