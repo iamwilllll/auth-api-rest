@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import { handleInputErrors } from '../handleInputErrors.middleware.js';
+import { handleInputErrors } from '@/middlewares/index.js';
 
 export const registerMiddlewares = [
     body('name').trim().notEmpty().withMessage('Name is required.'),

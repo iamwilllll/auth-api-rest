@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiResponse } from '../helpers/index.js';
-import { AppError } from '../errors/appError.error.js';
+import { ApiResponse } from '@/helpers/index.js';
+import { AppError } from '@/errors/index.js';
 import { MongoServerError } from 'mongodb';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

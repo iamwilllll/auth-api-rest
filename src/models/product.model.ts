@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { ProductT } from '../types/index.js';
+import { ProductT } from '@/types/index.js';
 
 type ProductDocT = ProductT & Document;
 

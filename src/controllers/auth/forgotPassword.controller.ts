@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserModel } from '../../models/index.js';
-import { ApiResponse } from '../../helpers/index.js';
-import { createOtpCode } from '../../utils/index.js';
-import { sendEmailService } from '../../services/sendEmail.service.js';
+import { UserModel } from '@/models/index.js';
+import { ApiResponse } from '@/helpers/index.js';
+import { createOtpCode } from '@/utils/index.js';
+import { sendEmailService } from '@/services/index.js';
 import fs from 'node:fs';
 import path from 'node:path';
 

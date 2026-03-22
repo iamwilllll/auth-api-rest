@@ -1,11 +1,12 @@
-import { Server, Database } from './config/index.js';
+import 'module-alias/register';
 import express from 'express';
-import appRouter from './routes/index.js';
 import cookieParser from 'cookie-parser';
 import cors, { CorsOptions } from 'cors';
-import { env } from './config/env.js';
-import path from 'node:path';
-import { fileURLToPath } from 'url';
+import createCSM from '@wilfrynvil/api-documentation';
+
+import { appRouter } from '@/routes/index.js';
+import { Server, Database, env } from '@/config/index.js';
+import { errorMiddleware } from '@/middlewares/index.js';
 
 (async () => {
     await Database.connect();
@@ -42,10 +43,9 @@ async function main() {
     //* routes
     server.use('/api', appRouter);
 
-    // * static files
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
+    //* error handling middleware
+    server.use(errorMiddleware);
 
-    server.use(express.static(path.join(__dirname, 'static')));
-    server.get('/', (req, res) => res.sendFile(path.join(__dirname, 'static', 'docs.html')));
+    // * api documentation
+    server.use('', createCSM({ mode: env.isDev ? 'development' : 'production', routePath: '' }));
 }

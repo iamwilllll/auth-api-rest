@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { ApiResponse } from '../../helpers/response.js';
-import { UserModel } from '../../models/user.model.js';
-import { AppError } from '../../errors/appError.error.js';
-import { comparePassword, getUserWithOutPass } from '../../utils/index.js';
-import { SessionModel } from '../../models/session.model.js';
-import { env } from '../../config/env.js';
+import { ApiResponse } from '@/helpers/index.js';
+import { UserModel, SessionModel } from '@/models/index.js';
+import { AppError } from '@/errors/index.js';
+import { comparePassword, getUserWithOutPass } from '@/utils/index.js';
+import { env } from '@/config/index.js';
 import jwt from 'jsonwebtoken';
 
 export async function loginController(req: Request, res: Response, next: NextFunction) {

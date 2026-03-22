@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '../../errors/appError.error.js';
-import { ApiResponse } from '../../helpers/response.js';
-import { SessionModel } from '../../models/session.model.js';
+import { AppError } from '@/errors/index.js';
+import { ApiResponse } from '@/helpers/index.js';
+import { SessionModel } from '@/models/index.js';
 
 export async function logoutController(req: Request, res: Response, next: NextFunction) {
     try {

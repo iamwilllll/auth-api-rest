@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserModel } from '../../models/user.model.js';
-import { createOtpCode } from '../../utils/createOtpCode.js';
-import { env } from '../../config/env.js';
-import { ApiResponse } from '../../helpers/response.js';
+import { UserModel } from '@/models/index.js';
+import { createOtpCode } from '@/utils/index.js';
+import { env } from '@/config/index.js';
+import { ApiResponse } from '@/helpers/index.js';
 import path from 'node:path';
 import fs from 'node:fs';
-import { sendEmailService } from '../../services/sendEmail.service.js';
+import { sendEmailService } from '@/services/index.js';
 
 export async function refreshEmailVerificationCodeController(req: Request, res: Response, next: NextFunction) {
     try {

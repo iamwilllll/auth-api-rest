@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '../../errors/appError.error.js';
-import { UserModel } from '../../models/user.model.js';
-import { ApiResponse } from '../../helpers/response.js';
-import { UserWithOutPassT } from '../../types/index.js';
-import { getUserWithOutPass } from '../../utils/getUserWithOutPass.js';
+import { AppError } from '@/errors/index.js';
+import { UserModel } from '@/models/index.js';
+import { ApiResponse } from '@/helpers/index.js';
+import { UserWithOutPassT } from '@/types/index.js';
+import { getUserWithOutPass } from '@/utils/index.js';
 
 export async function emailConfirmController(req: Request, res: Response, next: NextFunction) {
     try {

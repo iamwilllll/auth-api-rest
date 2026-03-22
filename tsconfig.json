@@ -2,6 +2,7 @@
     "include": ["src"],
     "exclude": ["node_modules", "dist"],
     "compilerOptions": {
+        "ignoreDeprecations": "6.0",
         "rootDir": "./src",
         "outDir": "./dist",
         "module": "nodenext",
@@ -17,6 +18,10 @@
         "isolatedModules": true,
         "moduleDetection": "force",
         "skipLibCheck": true,
-        "typeRoots": ["./src/@types", "./node_modules/@types"]
+        "typeRoots": ["./src/@types", "./node_modules/@types"],
+        "baseUrl": "./src",
+        "paths": {
+            "@/*": ["*"]
+        }
     }
 }

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '../../errors/appError.error.js';
-import { UserModel } from '../../models/user.model.js';
+import { AppError } from '@/errors/index.js';
+import { UserModel } from '@/models/user.model.js';
 
 export async function loadUser(req: Request, res: Response, next: NextFunction) {
     try {

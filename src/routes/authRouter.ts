@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { errorMiddleware } from '../middlewares/errorMiddleware.middleware.js';
 
 import {
     registerController,
@@ -9,7 +8,7 @@ import {
     getCurrentUserController,
     forgotPasswordController,
     resetPasswordController,
-} from '../controllers/index.js';
+} from '@/controllers/index.js';
 
 import {
     registerMiddlewares,
@@ -20,19 +19,19 @@ import {
     loadUser,
     forgotPasswordMiddlewares,
     resetPasswordMiddlewares,
-} from '../middlewares/index.js';
-import { logoutController } from '../controllers/auth/logout.controller.js';
+} from '@/middlewares/index.js';
+import { logoutController } from '@/controllers/auth/logout.controller.js';
 
 const authRouter: Router = Router();
 
-authRouter.post('/register', registerMiddlewares, registerController, errorMiddleware);
-authRouter.put('/email/confirm', emailConfirmMiddlewares, emailConfirmController, errorMiddleware);
-authRouter.put('/email/refresh', refreshEmailVerificationCodeMiddlewares, refreshEmailVerificationCodeController, errorMiddleware);
-authRouter.post('/login', loginMiddlewares, loginController, errorMiddleware);
-authRouter.post('/logout', authenticate, logoutController, errorMiddleware);
-authRouter.get('/me', authenticate, loadUser, getCurrentUserController, errorMiddleware);
+authRouter.post('/register', registerMiddlewares, registerController);
+authRouter.put('/email/confirm', emailConfirmMiddlewares, emailConfirmController);
+authRouter.put('/email/refresh', refreshEmailVerificationCodeMiddlewares, refreshEmailVerificationCodeController);
+authRouter.post('/login', loginMiddlewares, loginController);
+authRouter.post('/logout', authenticate, logoutController);
+authRouter.get('/me', authenticate, loadUser, getCurrentUserController);
 
-authRouter.post('/password/forgot', forgotPasswordMiddlewares, forgotPasswordController, errorMiddleware);
-authRouter.post('/password/reset', resetPasswordMiddlewares, resetPasswordController, errorMiddleware);
+authRouter.post('/password/forgot', forgotPasswordMiddlewares, forgotPasswordController);
+authRouter.post('/password/reset', resetPasswordMiddlewares, resetPasswordController);
 
 export default authRouter;

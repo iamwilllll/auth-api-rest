@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
-import { AppError } from '../../errors/appError.error.js';
+import { AppError } from '@/errors/index.js';
 import jwt from 'jsonwebtoken';
-import { env } from '../../config/env.js';
-import { SessionModel } from '../../models/session.model.js';
+import { env } from '@/config/env.js';
+import { SessionModel } from '@/models/session.model.js';
 
 interface SessionPayload extends JwtPayload {
     sessionId: string;

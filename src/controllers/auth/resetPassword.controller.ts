@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '../../errors/appError.error.js';
-import { UserModel } from '../../models/user.model.js';
-import { ApiResponse } from '../../helpers/response.js';
-import { hashPassword } from '../../utils/hashPassword.js';
+import { AppError } from '@/errors/index.js';
+import { UserModel } from '@/models/index.js';
+import { ApiResponse } from '@/helpers/index.js';
+import { hashPassword } from '@/utils/index.js';
 
 export async function resetPasswordController(req: Request, res: Response, next: NextFunction) {
     try {

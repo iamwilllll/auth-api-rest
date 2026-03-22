@@ -1,4 +1,5 @@
 export * from './handleInputErrors.middleware.js';
+export * from './errorMiddleware.middleware.js';
 
 //* AUTH
 export * from './auth/register.middlewares.js';

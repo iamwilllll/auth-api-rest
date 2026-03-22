@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
-import { type SessionT } from '../types/index.js';
+import { type SessionT } from '@/types/index.js';
 
 type SessionDocT = SessionT & Document;
 
