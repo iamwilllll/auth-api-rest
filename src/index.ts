@@ -47,5 +47,7 @@ async function main() {
     server.use(errorMiddleware);
 
     // * api documentation
-    server.use('', createCSM({ mode: env.isDev ? 'development' : 'production', routePath: '' }));
+    server.use('', createCSM({ mode: env.isDev ? 'development' : 'production', routePath: 'docs' }));
+
+    
 }
