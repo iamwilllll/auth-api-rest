@@ -19,6 +19,10 @@ async function main() {
 
     // * proxy
     server.set('trust proxy', 1);
+    server.use(cookieParser());
+
+    // * api documentation
+    server.use(createCSM({ mode: env.isDev ? 'development' : 'production' }));
 
     //* cors configuration
     const allowedOrigins: string[] = [env.baseUrl, 'http://localhost:5173', 'http://localhost:3000'];
@@ -37,7 +41,6 @@ async function main() {
 
     //* middlewares
     server.use(express.json());
-    server.use(cookieParser());
     server.use(cors(corsOptions));
 
     //* routes
@@ -45,7 +48,4 @@ async function main() {
 
     //* error handling middleware
     server.use(errorMiddleware);
-
-    // * api documentation
-    server.use(createCSM({ mode: env.isDev ? 'development' : 'production' }));
 }
