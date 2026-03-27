@@ -35,7 +35,7 @@
         "eslint": "^9.39.4",
         "globals": "^17.4.0",
         "jiti": "^2.6.1",
-        "knip": "^6.0.4",
+        "knip": "^6.0.6",
         "prettier": "^3.8.1",
         "rimraf": "^6.1.3",
         "tsx": "^4.21.0",
@@ -43,7 +43,7 @@
         "typescript-eslint": "^8.57.2"
     },
     "dependencies": {
-        "@wilfrynvil/api-documentation": "^3.0.3",
+        "@wilfrynvil/api-documentation": "^3.0.4",
         "bcrypt": "^6.0.0",
         "colors": "^1.4.0",
         "cookie-parser": "^1.4.7",
@@ -53,8 +53,8 @@
         "express-validator": "^7.3.1",
         "jsonwebtoken": "^9.0.3",
         "module-alias": "^2.3.4",
-        "mongodb": "^7.1.0",
-        "mongoose": "^9.3.2",
+        "mongodb": "^7.1.1",
+        "mongoose": "^9.3.3",
         "nodemailer": "^7.0.13",
         "tsc-alias": "^1.8.16",
         "tsconfig-paths": "^4.2.0"
